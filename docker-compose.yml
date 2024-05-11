@@ -1,0 +1,81 @@
+version: '3'
+services:
+  zipkin:
+    build:
+      context: ./zipkin-server
+      dockerfile: Dockerfile
+    ports:
+      - "9411:9411"
+
+  # Servidor Vault
+  vault:
+    build:
+      context: ./vault-server
+      dockerfile: Dockerfile
+    ports:
+      - "8200:8200"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8200"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+  # Servidor Keycloak
+  keycloak:
+    build:
+      context: ./keycloak-server
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      
+    depends_on:
+      vault:
+        condition: service_healthy
+    healthcheck:
+    # Healtcheck que comprobará el estado del servidor de Keycloak
+      test: ["CMD", "curl", "-f", "http://localhost:8080/realms/master"]
+      interval: 15s
+      timeout: 10s
+      retries: 3
+      
+    networks:
+      - restaurant-network
+ 
+ # MICROSERVICIOS
+      
+  micro-config-server:
+    build:
+      context: ./micro-config-server
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000"
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+    networks:
+    - restaurant-network
+    
+    depends_on:
+      keycloak:
+        condition: service_healthy
+    
+  micro-eureka-discovery-server:
+    build:
+      context: ./micro-eureka-discovery-server
+      dockerfile: Dockerfile
+      
+    depends_on:
+      - micro-config-server
+    ports:
+      - "8761:8761"
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+    networks:
+      - restaurant-network
+      
+# REDES
+networks:
+  restaurant-network:
+    driver: bridge
