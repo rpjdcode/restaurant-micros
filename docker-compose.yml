@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9411:9411"
+    networks:
+      - restaurant-network
 
   # Servidor Vault
   vault:
@@ -19,6 +21,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 3
+    networks:
+      - restaurant-network
 
   # Servidor Keycloak
   keycloak:
