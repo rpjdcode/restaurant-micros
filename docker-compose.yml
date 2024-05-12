@@ -1,11 +1,34 @@
 version: '3'
 services:
+  mysql-server:
+    env_file: "/mysql-server/mysql.env"
+    build: 
+      context: ./mysql-server
+      dockerfile: Dockerfile
+    ports:
+      - "3307:3307"
+    networks:
+      - restaurant-network
+    environment:
+      - HEALTHCHECK_USER=${HEALTHCHECK_USER}
+      - HEALTHCHECK_PASSWORD=${HEALTHCHECK_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "-h", "localhost", "-u", "${HEALTHCHECK_USER}", "-p${HEALTHCHECK_PASSWORD}", "ping"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      
   zipkin:
     build:
       context: ./zipkin-server
       dockerfile: Dockerfile
     ports:
       - "9411:9411"
+    depends_on:
+      mysql-server:
+        condition: service_healthy
     networks:
       - restaurant-network
 
@@ -21,30 +44,31 @@ services:
       interval: 5s
       timeout: 5s
       retries: 3
+    depends_on:
+      mysql-server:
+        condition: service_healthy
     networks:
       - restaurant-network
 
   # Servidor Keycloak
   keycloak:
+    env_file: "/keycloak-server/keycloak.env"
     build:
       context: ./keycloak-server
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    environment:
-      - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=admin
-      
     depends_on:
+      mysql-server:
+        condition: service_healthy
       vault:
         condition: service_healthy
     healthcheck:
     # Healtcheck que comprobará el estado del servidor de Keycloak
       test: ["CMD", "curl", "-f", "http://localhost:8080/realms/master"]
-      interval: 15s
+      interval: 40s
       timeout: 10s
       retries: 3
-      
     networks:
       - restaurant-network
  
@@ -60,7 +84,7 @@ services:
       SPRING_PROFILES_ACTIVE: default
     networks:
     - restaurant-network
-    
+    # TODO: Se debería agregar un healhcheck para que compruebe el actuator
     depends_on:
       keycloak:
         condition: service_healthy
@@ -68,8 +92,7 @@ services:
   micro-eureka-discovery-server:
     build:
       context: ./micro-eureka-discovery-server
-      dockerfile: Dockerfile
-      
+      dockerfile: Dockerfile 
     depends_on:
       - micro-config-server
     ports:
@@ -83,3 +106,7 @@ services:
 networks:
   restaurant-network:
     driver: bridge
+    
+volumes:
+  mysql-data:
+   driver: local

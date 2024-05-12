@@ -38,10 +38,10 @@ COPY --from=base /lib64/libpcre2-8.so.0 /lib64/
 
 ########################################################################################################
 #CONFIGURACIÓN DE KEYCLOAK
-ENV KC_DB=mysql
-ENV KC_DB_URL=jdbc:mysql://host.docker.internal:3306/keycloak
-ENV KC_DB_USERNAME=root
-ENV KC_DB_PASSWORD=123456a
-ENV KC_HOSTNAME=localhost
+#ENV KC_DB=mysql
+#ENV KC_DB_URL=jdbc:mysql://mysql-server:3307/keycloak
+#ENV KC_DB_USERNAME=keycloak_user
+#ENV KC_DB_PASSWORD=keycloak123
+#ENV KC_HOSTNAME=localhost
 ########################################################################################################
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev"]
