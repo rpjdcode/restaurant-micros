@@ -8,6 +8,8 @@ El objetivo de este proyecto es el desarrollo de una aplicación web en una arqu
 
 La temática elegida para el desarrollo está relacionada con la hostelería, donde se intenta implementar una solución de aplicación para una cadena de restaurantes.
 
+Repositorio de configuraciones de microservicios: https://github.com/rpjdcode/microservices-configuration
+
 ---
 
 **Compilación y despliegue del proyecto**
@@ -51,8 +53,6 @@ Utilizar Docker en el desarrollo del proyecto es fundamental para lograr un desp
 En el caso de este proyecto, se utiliza Docker Compose, que permite definir y administrar aplicaciones multicontenedor.
 
 Cada servidor será desplegado en su propio contenedor virtual, actualmente en una misma red virtual de contenedores (en un futuro, se recurrirá al Elastic Container de AWS para desplegar la aplicación, cuando la aplicación esté en un estado más avanzado de desarrollo).
-
-![image-20240512230001052](C:\Users\Ruben\AppData\Roaming\Typora\typora-user-images\image-20240512230001052.png)
 
 ---
 
