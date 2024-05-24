@@ -37,13 +37,17 @@ services:
     build:
       context: ./vault-server
       dockerfile: Dockerfile
+    environment:
+      VAULT_ADDR: http://vault:8200
     ports:
       - "8200:8200"
+    cap_add:
+      - IPC_LOCK
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:8200"]
-      interval: 5s
+      test: ["CMD-SHELL","sh /usr/local/bin/healthchecks.sh"]
+      interval: 15s
       timeout: 5s
-      retries: 3
+      retries: 10
     depends_on:
       mysql-server:
         condition: service_healthy
@@ -81,13 +85,18 @@ services:
     ports:
       - "9000:9000"
     environment:
-      SPRING_PROFILES_ACTIVE: default
+      SPRING_CLOUD_VAULT_HOST: vault
+      SPRING_CLOUD_VAULT_URL: http://vault:8200
+      SPRING_PROFILES_ACTIVE: docker
+      VAULT_HOST: vault
     networks:
     - restaurant-network
     # TODO: Se debería agregar un healhcheck para que compruebe el actuator
     depends_on:
       keycloak:
         condition: service_healthy
+        
+        
     
   micro-eureka-discovery-server:
     build:
@@ -98,7 +107,7 @@ services:
     ports:
       - "8761:8761"
     environment:
-      SPRING_PROFILES_ACTIVE: default
+      SPRING_PROFILES_ACTIVE: docker
     networks:
       - restaurant-network
       

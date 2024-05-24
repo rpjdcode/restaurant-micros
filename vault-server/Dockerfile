@@ -1,14 +1,22 @@
-FROM hashicorp/vault:latest
+# Utiliza la imagen oficial de Vault
+FROM hashicorp/vault:1.13.3
 
-RUN mkdir -p /vault/config
-COPY config.hcl /vault/config/
+# Crear el directorio para las claves si no existe
+RUN mkdir -p /vault/keys
 
-ENV VAULT_ADDR='http://0.0.0.0:8200'
-ENV VAULT_DEV_ROOT_TOKEN_ID='root'
-ENV VAULT_CONFIG_DIR /vault/config
+# Copia el archivo de configuración y el script de inicialización a la imagen
+COPY ./configs/config.hcl /vault/config/config.hcl
 
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY healthchecks.sh /usr/local/bin/healthchecks.sh
+
+# Establece permisos de ejecución para el script
+RUN chmod +x /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/healthchecks.sh
+
+# Expone el puerto de Vault
 EXPOSE 8200
 
-ENTRYPOINT ["vault"]
-
-CMD ["server", "-config=/vault/config/config.hcl"]
+# Comando para iniciar Vault con la configuración especificada
+#CMD ["sh", "-c", "/vault/init-vault.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

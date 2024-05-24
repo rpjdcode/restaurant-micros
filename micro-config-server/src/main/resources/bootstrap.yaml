@@ -1,0 +1,34 @@
+server:
+  port: 9000
+  
+spring:
+  application:
+    name: micro-config-server
+  cloud:
+    vault:
+      host: vault
+      scheme: http
+      port: 8200
+      uri: http://vault:8200
+      connection-timeout: 5000
+      read-timeout: 15000
+      authentication: TOKEN
+      token: hvs.vO1fZ4N8P5RAOUJBBrE7vgTW
+      kv:
+        enabled: true
+        backend: secret
+        default-context: gitrepo
+        profile-separator: '/'
+    config:
+      server:
+        git:
+          default-label: main
+          search-paths: /config-data
+          uri: ${git.uri}
+          username: ${git.username}
+          password: ${git.password}
+
+management:
+  health:
+    vault:
+      enabled: false

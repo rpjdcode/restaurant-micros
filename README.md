@@ -32,7 +32,7 @@ docker-compose up --build
 | Spring Boot  | 3.2.5                        | Desarrollo ágil de aplicaciones Spring                       |
 | Spring Cloud | 2023.0.1                     | Desarrollo de aplicaciones orientadas a entornos de microservicios |
 | Keycloak     | 24.0.3                       | Servidor de autenticación y autorización                     |
-| Vault        | Latest (pendiente de elegir) | Servidor gestor de claves y secretos                         |
+| Vault        | 1.13.3                       | Servidor gestor de claves y secretos                         |
 | Zipkin       | Latest (pendiente de elegir) | Trazabilidad de peticiones web                               |
 
 ---
