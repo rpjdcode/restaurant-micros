@@ -23,13 +23,13 @@ docker-compose up --build
 
 ---
 
-**Tecnologías**
+**Tecnologías** utilizadas
 
 | TECNOLOGÍA   | VERSIÓN                      | DESCRIPCIÓN                                                  |
 | ------------ | ---------------------------- | ------------------------------------------------------------ |
 | Java         | 21                           | Lenguaje utilizado para el desarrollo                        |
 | MySQL        | 8.0.36                       | Base de datos relacional                                     |
-| Spring Boot  | 3.2.5                        | Desarrollo ágil de aplicaciones Spring                       |
+| Spring Boot  | 3.3.0                        | Desarrollo ágil de aplicaciones Spring                       |
 | Spring Cloud | 2023.0.1                     | Desarrollo de aplicaciones orientadas a entornos de microservicios |
 | Keycloak     | 24.0.3                       | Servidor de autenticación y autorización                     |
 | Vault        | 1.13.3                       | Servidor gestor de claves y secretos                         |
@@ -39,10 +39,11 @@ docker-compose up --build
 
 **Microservicios**
 
-| TECNOLOGÍA                 | NOMBRE                        | VERSIÓN |
-| -------------------------- | ----------------------------- | ------- |
-| Spring Cloud Config Server | micro-config-server           | 0.0.1   |
-| Eureka Discovery Server    | micro-eureka-discovery-server | 0.0.1   |
+| TECNOLOGÍA                  | NOMBRE                        | VERSIÓN |
+| --------------------------- | ----------------------------- | ------- |
+| Spring Cloud Config Server  | micro-config-server           | 0.0.1   |
+| Eureka Discovery Server     | micro-eureka-discovery-server | 0.0.1   |
+| Spring Cloud Gateway Server | micro-gateway-server          | 0.0.1   |
 
 ---
 
