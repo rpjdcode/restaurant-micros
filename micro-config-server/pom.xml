@@ -7,8 +7,7 @@
 		<groupId>com.eviden</groupId>
 		<artifactId>restaurant-micros</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath> <!-- lookup parent from
-		repository -->
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>micro-config-server</artifactId>
 	<name>micro-config-server</name>
@@ -49,11 +48,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>3.2.5</version>  <!-- Asegúrate de usar la versión
-				adecuada para Spring Boot 3.2.5 -->
+				<version>3.3.0</version> 
 				<configuration>
 					<mainClass>
-						com.eviden.microconfigserver.MicroConfigServerApplication</mainClass>
+						com.eviden.microconfigserver.MicroConfigServerApplication
+					</mainClass>
 				</configuration>
 				<executions>
 					<execution>

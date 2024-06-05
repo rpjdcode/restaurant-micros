@@ -13,7 +13,7 @@ spring:
       connection-timeout: 5000
       read-timeout: 15000
       authentication: TOKEN
-      token: hvs.vO1fZ4N8P5RAOUJBBrE7vgTW
+      token: hvs.Qk9DiUWCrdBNHhK6QtJOLBPw
       kv:
         enabled: true
         backend: secret
