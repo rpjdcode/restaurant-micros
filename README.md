@@ -34,6 +34,7 @@ docker-compose up --build
 | Keycloak     | 24.0.3                       | Servidor de autenticación y autorización                     |
 | Vault        | 1.13.3                       | Servidor gestor de claves y secretos                         |
 | Zipkin       | Latest (pendiente de elegir) | Trazabilidad de peticiones web                               |
+| MongoDB      | Latest (pendiente de elegir) | Base de datos documental                                     |
 
 ---
 
@@ -44,6 +45,7 @@ docker-compose up --build
 | Spring Cloud Config Server  | micro-config-server           | 0.0.1   |
 | Eureka Discovery Server     | micro-eureka-discovery-server | 0.0.1   |
 | Spring Cloud Gateway Server | micro-gateway-server          | 0.0.1   |
+| Spring Cloud Reactive Web   | micro-reactivo-prueba         | -       |
 
 ---
 

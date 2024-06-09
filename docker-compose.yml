@@ -1,5 +1,17 @@
 version: '3'
 services:
+  mongodb-server:
+    build:
+      context: ./mongodb-server
+      dockerfile: Dockerfile
+    ports:
+      - "27017:27017"
+    networks:
+      - restaurant-network
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=123456a
+
   mysql-server:
     env_file: "/mysql-server/mysql.env"
     build: 
@@ -28,6 +40,8 @@ services:
       - "9411:9411"
     depends_on:
       mysql-server:
+        condition: service_healthy
+      micro-eureka-discovery-server:
         condition: service_healthy
     networks:
       - restaurant-network
@@ -92,6 +106,11 @@ services:
       VAULT_HOST: vault
     networks:
     - restaurant-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     # TODO: Se debería agregar un healhcheck para que compruebe el actuator
     depends_on:
       keycloak:
@@ -123,8 +142,10 @@ services:
       context: ./micro-gateway-server
       dockerfile: Dockerfile
     depends_on:
-      - micro-config-server
-      - micro-eureka-discovery-server
+      micro-config-server:
+        condition: service_healthy
+      micro-eureka-discovery-server:
+        condition: service_healthy
     ports:
       - "8081:8081"
     environment:

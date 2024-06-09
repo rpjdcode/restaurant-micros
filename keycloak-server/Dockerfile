@@ -44,4 +44,10 @@ COPY --from=base /lib64/libpcre2-8.so.0 /lib64/
 #ENV KC_DB_PASSWORD=keycloak123
 #ENV KC_HOSTNAME=localhost
 ########################################################################################################
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev"]
+COPY restaurant-realm.json /opt/keycloak/data/import/
+
+ENV KEYCLOAK_IMPORT=/opt/keycloak/data/import/restaurant-realm.json
+ENV KEYCLOAK_SPI_SCRIPT_UPLOAD_ENABLED=true
+
+#ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev"]
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev", "--import-realm"]

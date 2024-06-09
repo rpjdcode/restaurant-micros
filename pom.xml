@@ -11,8 +11,6 @@
 		<module>micro-config-server</module>
 		<module>micro-eureka-discovery-server</module>
 		<module>micro-gateway-server</module>
-		<!--		<module>services/service-2</module>-->
-		<!-- Agrega más módulos según sea necesario -->
 	</modules>
 
 	<properties>
