@@ -3,7 +3,7 @@ package com.eviden.microreactivo.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document(collection = "dummyCollection")
 public class Product {
     @Id
     private String id;
