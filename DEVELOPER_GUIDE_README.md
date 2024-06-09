@@ -51,11 +51,11 @@ El despliegue consta de 3 partes:
 
    Se copia el `Root Token` y se incluye en el `bootstrap.yaml` del `micro-config-server`
 
-   ![](./wiki/dev_guide/imgs/config_server_vault.jpg))
+   ![](./wiki/dev_guide/imgs/config_server_vault.JPG))
 
    Una vez realizado, se deben generar los JARS del proyecto para aplicar los cambios realizados (`mvn clean install`)
 
-   ![](./wiki/dev_guide/imgs/mvn-clean-success.jpg)
+   ![](./wiki/dev_guide/imgs/mvn-clean-success.JPG)
 
 3. Construir y desplegar los microservicios
 
