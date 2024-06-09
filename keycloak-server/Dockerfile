@@ -15,6 +15,11 @@ WORKDIR /opt/keycloak
 RUN keytool -genkeypair -storepass password -storetype PKCS12 -keyalg RSA -keysize 2048 -dname "CN=server" -alias server -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -keystore conf/server.keystore
 RUN /opt/keycloak/bin/kc.sh build
 
+USER root
+COPY entrypoint.sh /opt/keycloak/entrypoint.sh
+COPY keycloak.conf /opt/keycloak/conf/keycloak.conf
+RUN chmod +x /opt/keycloak/entrypoint.sh
+
 FROM quay.io/keycloak/keycloak:24.0.3
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
@@ -45,9 +50,7 @@ COPY --from=base /lib64/libpcre2-8.so.0 /lib64/
 #ENV KC_HOSTNAME=localhost
 ########################################################################################################
 COPY restaurant-realm.json /opt/keycloak/data/import/
-
-ENV KEYCLOAK_IMPORT=/opt/keycloak/data/import/restaurant-realm.json
 ENV KEYCLOAK_SPI_SCRIPT_UPLOAD_ENABLED=true
+ENV KEYCLOAK_IMPORT=/opt/keycloak/data/import/restaurant-realm.json
 
-#ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev"]
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev", "--import-realm"]
+ENTRYPOINT [ "/bin/sh", "/opt/keycloak/entrypoint.sh" ]

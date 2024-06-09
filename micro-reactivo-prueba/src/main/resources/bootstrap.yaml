@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: micro-reactivo-prueba
+  cloud:
+    config:
+      enabled: true
+      uri: http://micro-config-server:9000
+  profiles:
+    active:
+    - docker

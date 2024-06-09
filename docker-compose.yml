@@ -70,6 +70,8 @@ services:
 
   # Servidor Keycloak
   keycloak:
+    environment:
+      - KEYCLOAK_SPI_SCRIPT_UPLOAD_ENABLED=true
     env_file: "/keycloak-server/keycloak.env"
     build:
       context: ./keycloak-server
@@ -148,6 +150,26 @@ services:
         condition: service_healthy
     ports:
       - "8081:8081"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - restaurant-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  
+  # MICROSERVICIO REACTIVO DE TESTING
+  micro-reactivo-prueba:
+    build:
+      context: ./micro-reactivo-prueba
+      dockerfile: Dockerfile
+    depends_on:
+      micro-gateway-server:
+       condition: service_healthy
+    ports:
+      - "10000:10000"
     environment:
       SPRING_PROFILES_ACTIVE: docker
     networks:

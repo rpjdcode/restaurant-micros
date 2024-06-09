@@ -11,6 +11,7 @@
 		<module>micro-config-server</module>
 		<module>micro-eureka-discovery-server</module>
 		<module>micro-gateway-server</module>
+		<module>micro-reactivo-prueba</module>
 	</modules>
 
 	<properties>
