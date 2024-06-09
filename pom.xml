@@ -8,6 +8,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>micros-common</module>
 		<module>micro-config-server</module>
 		<module>micro-eureka-discovery-server</module>
 		<module>micro-gateway-server</module>
@@ -19,6 +20,8 @@
 		<spring-boot.version>3.3.0</spring-boot.version>
 		<spring-cloud.version>2023.0.1</spring-cloud.version>
 		<keycloak.version>24.0.3</keycloak.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
 	<dependencyManagement>
@@ -54,6 +57,7 @@
 						fuente de Java -->
 						<target>21</target> <!-- Especifica la versión de
 						bytecode que debe producir el compilador -->
+						<encoding>UTF-8</encoding>
 					</configuration>
 				</plugin>
 			</plugins>

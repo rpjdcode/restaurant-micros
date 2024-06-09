@@ -11,6 +11,12 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=123456a
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
   mysql-server:
     env_file: "/mysql-server/mysql.env"
@@ -155,10 +161,11 @@ services:
     networks:
       - restaurant-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
       interval: 30s
       timeout: 10s
       retries: 3
+    stop_grace_period: 1m30s
   
   # MICROSERVICIO REACTIVO DE TESTING
   micro-reactivo-prueba:
@@ -168,6 +175,8 @@ services:
     depends_on:
       micro-gateway-server:
        condition: service_healthy
+      mongodb-server:
+        condition: service_healthy
     ports:
       - "10000:10000"
     environment:
