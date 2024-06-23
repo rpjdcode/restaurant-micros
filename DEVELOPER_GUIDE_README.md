@@ -6,11 +6,11 @@ En esta guía encontrará los conceptos fundamentales para entender la complejid
 
 1. [Arquitectura del proyecto](#arquitectura-del-proyecto)
 
-2. [Compilacion](#compilacion)
+2. [Compilacion](#compilación)
 
-3. [Construcción y despliegue con Docker Compose (LOCAL)](#construccion-y-despliegue-con-docker-compose-en-entorno-local)
+3. [Construcción y despliegue con Docker Compose (LOCAL)](#construcción-y-despliegue-con-docker-compose-en-entorno-local)
 
-4. [Creación de copias de seguridad de BBDD e importación manual](#creacion-de-copias-de-seguridad-de-bbdd-e-importacion-manual)
+4. [Creación de copias de seguridad de BBDD e importación manual](#creación-de-copias-de-seguridad-de-bbdd-e-importación-manual)
 
    
 
