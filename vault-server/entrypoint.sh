@@ -4,8 +4,6 @@ LOG_DIR=/vault-storage/logs
 FECHA=$(date +'%Y%m%d%H%M%S')
 LOG_FILE="$LOG_DIR/vault_entrypoint_"$FECHA".log"
 
-######################## BEGIN FUNCIONES ########################
-
 function imprimirOutput() {
 	fechaOutput="["$(date +'%d/%m/%Y %H:%M:%S')"]"
 	outputText="$fechaOutput $1"
@@ -100,10 +98,8 @@ almacenarArchivoHealthCheck() {
 	touch /healthcheck/status
 	echo -n "HEALTHY" > /healthcheck/status
 }
-######################## END FUNCIONES ########################
 
-
-######################## BEGIN MAIN ########################
+# main
 
 if [ ! -e "$LOG_DIR" ]; then
 	mkdir -p $LOG_DIR
