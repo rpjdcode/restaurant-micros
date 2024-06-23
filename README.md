@@ -1,3 +1,5 @@
+
+
 **RESTAURANT-MICROS**
 
 ---
@@ -9,6 +11,8 @@ El objetivo de este proyecto es el desarrollo de una aplicación web en una arqu
 La temática elegida para el desarrollo está relacionada con la hostelería, donde se intenta implementar una solución de aplicación para una cadena de restaurantes.
 
 Repositorio de configuraciones de microservicios: https://github.com/rpjdcode/microservices-configuration
+
+Repositorio de aplicación front-end para la arquitectura implementada: https://github.com/rpjdcode/restaurant-micros-front
 
 ---
 
@@ -23,7 +27,7 @@ docker-compose up --build
 
 ---
 
-**Tecnologías** utilizadas
+**Tecnologías** utilizadas durante el desarrollo `back-end`
 
 | TECNOLOGÍA   | VERSIÓN                      | DESCRIPCIÓN                                                  |
 | ------------ | ---------------------------- | ------------------------------------------------------------ |
@@ -35,6 +39,19 @@ docker-compose up --build
 | Vault        | 1.13.3                       | Servidor gestor de claves y secretos                         |
 | Zipkin       | Latest (pendiente de elegir) | Trazabilidad de peticiones web                               |
 | MongoDB      | Latest (pendiente de elegir) | Base de datos documental                                     |
+
+
+
+**Tecnologías** utilizadas durante el desarrollo `front-end`
+
+| TECNOLOGÍA  | VERSIÓN | DESCRIPCIÓN                                                  |
+| ----------- | ------- | ------------------------------------------------------------ |
+| Angular     | 18.0.3  | Framework de desarrollo web                                  |
+| TypeScript  | 5.4.2   | Lenguaje de programación implementada para el desarrollo     |
+| Bootstrap   | 5.3.3   | Framework de desarrollo de interfaces web                    |
+| keycloak-js | 24.0.3  | Biblioteca para la gestión de acceso autorizado con Keycloak |
+
+
 
 ---
 
