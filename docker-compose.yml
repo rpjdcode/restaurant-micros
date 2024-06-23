@@ -1,6 +1,5 @@
 version: '3'
 services:
-
   # Base de datos documental experimental
   mongodb-server:
     build:
@@ -104,7 +103,35 @@ services:
       retries: 3
     networks:
       - restaurant-network
- 
+
+  # Servidor Zookeeper
+  zookeeper:
+    build:
+      context: ./zookeeper-server
+      dockerfile: Dockerfile
+    ports:
+      - "2181:2181"
+    networks:
+      - restaurant-network
+    healthcheck:
+      test: ["CMD", "echo", "ruok", "|", "nc", "localhost", "2181", "|", "grep", "imok"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+  # Servidor Kafka    
+  kafka:
+    build:
+      context: ./kafka-server
+      dockerfile: Dockerfile
+    ports:
+      - "9092:9092"
+    networks:
+      - restaurant-network
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+
  # MICROSERVICIOS
   
   # Config Server    
@@ -129,9 +156,8 @@ services:
     # TODO: Se debería agregar un healhcheck para que compruebe el actuator
     depends_on:
       keycloak:
-        condition: service_healthy
-        
-        
+        condition: service_healthy     
+  
   # Eureka Discovery Server
   micro-eureka-discovery-server:
     build:
@@ -169,7 +195,7 @@ services:
       - restaurant-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
-      interval: 30s
+      interval: 40s
       timeout: 10s
       retries: 3
     stop_grace_period: 1m30s

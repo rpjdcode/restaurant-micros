@@ -81,6 +81,7 @@ El despliegue consta de 3 partes:
    docker-compose up micro-gateway-server --build
    ```
 
+------
 
 ### Creación de copias de seguridad de BBDD e importación manual
 
