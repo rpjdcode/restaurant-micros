@@ -1,10 +1,12 @@
-**Guía básica del desarrollador**
+# Guía básica del desarrollador
 
 En esta guía encontrará los conceptos fundamentales para entender la complejidad del proyecto desde el punto de vista del desarrollador.
 
 
 
-**Arquitectura del proyecto**
+
+
+## Arquitectura del proyecto
 
 Proyecto Maven, conformado por un proyecto padre en el cual se especifican las características generales compartidas por todos los proyectos, como por ejemplo:
 
@@ -17,7 +19,7 @@ Proyecto Maven, conformado por un proyecto padre en el cual se especifican las c
 
 Se ha desarrollado un Docker Compose para la construcción del entorno y despliegue de la arquitectura del proyecto
 
-**Compilación**
+### Compilación
 
 Para compilar el proyecto y generar los JARS de los microservicios, es tan sencillo como ejecutar, desde la raíz del proyecto:
 
@@ -27,7 +29,7 @@ mvn clean install
 
 
 
-**Construcción y despliegue con Docker Compose en entorno local**
+### Construcción y despliegue con Docker Compose en entorno local
 
 El despliegue consta de 3 partes:
 
@@ -70,11 +72,7 @@ El despliegue consta de 3 partes:
    ```
 
 
-
-
-
-
-**Creación de copias de seguridad de BBDD e importación manual**
+### Creación de copias de seguridad de BBDD e importación manual
 
 El contenedor de MySQL está preparado para capturar la señal de apagado y, antes de proceder con el apagado, se ejecuta un script encargado de generar los respaldos de todas las bases de datos indicadas en el script.
 
@@ -109,3 +107,5 @@ Tras ejecutar el script, se verifica la correcta importación de la copia, que e
 A modo de depuración de errores, se generan logs en la unidad de montaje.
 
 ![](./wiki/dev_guide/imgs/respaldo_bbdd_4.JPG)
+
+1. [Introducción General](#arquitectura-del-proyecto)

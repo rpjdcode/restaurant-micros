@@ -18,7 +18,7 @@ Repositorio de aplicación front-end para la arquitectura implementada: https://
 
 **Compilación y despliegue del proyecto**
 
-```
+```bash
 # Compilación del proyecto (generación de JARS de los microservicios)
 mvn clean install
 # Construcción de contenedores y despliegue
