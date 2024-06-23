@@ -77,7 +77,7 @@ habilitarMotorSecretos() {
 inicializacionSecretos() {
 	echo "Inicializando secretos de Vault"
 	# Adición de secretos (no recomendable dejar esto)
-	vault kv put secret/gitrepo git.uri=https://github.com/rpjdcode/microservices-configuration git.username=rpjdcode git.password=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
+	vault kv put secret/gitrepo git.uri=<enlace_git> git.username=<usuario_git> git.password=<password_git>
 }
 
 almacenarArchivoHealthCheck() {

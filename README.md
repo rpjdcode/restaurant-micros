@@ -29,7 +29,7 @@ docker-compose up --build
 | ------------ | ---------------------------- | ------------------------------------------------------------ |
 | Java         | 21                           | Lenguaje utilizado para el desarrollo                        |
 | MySQL        | 8.0.36                       | Base de datos relacional                                     |
-| Spring Boot  | 3.3.0                        | Desarrollo ágil de aplicaciones Spring                       |
+| Spring Boot  | 3.3.1                        | Desarrollo ágil de aplicaciones Spring                       |
 | Spring Cloud | 2023.0.1                     | Desarrollo de aplicaciones orientadas a entornos de microservicios |
 | Keycloak     | 24.0.3                       | Servidor de autenticación y autorización                     |
 | Vault        | 1.13.3                       | Servidor gestor de claves y secretos                         |
