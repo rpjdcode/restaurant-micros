@@ -69,4 +69,43 @@ El despliegue consta de 3 partes:
    docker-compose up micro-gateway-server --build
    ```
 
-   
+
+
+
+
+
+**Creación de copias de seguridad de BBDD e importación manual**
+
+El contenedor de MySQL está preparado para capturar la señal de apagado y, antes de proceder con el apagado, se ejecuta un script encargado de generar los respaldos de todas las bases de datos indicadas en el script.
+
+Los respaldos se almacenan en un volumen, en este caso en `/backup-bbdd`.
+
+Es importante mantener un histórico de las versiones de base de datos a modo de seguimiento y evolución del proyecto, además de facilitar el desarrollo y despliegue continuo, por lo que aquellos respaldos que el desarrollador considere valioso de mantener, lo podrá almacenar en `/mysql-server/sql/historical_bbdd`.
+
+En caso de querer importarlo mediante el script  `/mysql-server/scripts/import_bbdd.sh`,  se deberá ubicar el `.sql` en este directorio.
+
+![](./wiki/dev_guide/imgs/respaldo_bbdd.JPG)
+
+Luego, accediendo a la shell del contenedor de mysql, puede realizar la importación mediante el siguiente comando.
+
+```bash
+$IMPORT_BBDD_SCRIPT <NOMBRE_FICHERO> <NOMBRE_BBDD>
+```
+
+`$IMPORT_BBDD_SCRIPT` --> es una variable de entorno referenciando la ubicación del script `(/usr/local/bin/import_bbdd.sh)`, el script puede recibir los 2 parámetros indicados o ninguno.
+
+`<NOMBRE_FICHERO>` --> Nombre del fichero ubicado en la unidad de montaje (`/backup-bbdd`).
+
+`<NOMBRE_BBDD>` --> Nombre de base de datos a recrear y reimportar datos.
+
+En caso de no proporcionarle ningún parámetro, el script intentará realizar la importación de todas las bases de datos indicadas en el script, recogiendo el fichero cuya fecha en el nombre sea la más reciente.
+
+![](./wiki/dev_guide/imgs/respaldo_bbdd_2.JPG)
+
+Tras ejecutar el script, se verifica la correcta importación de la copia, que en este caso me brinda los usuarios registrados anteriormente en Keycloak.
+
+![](./wiki/dev_guide/imgs/respaldo_bbdd_3.JPG)
+
+A modo de depuración de errores, se generan logs en la unidad de montaje.
+
+![](./wiki/dev_guide/imgs/respaldo_bbdd_4.JPG)

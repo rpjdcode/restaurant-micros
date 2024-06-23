@@ -4,7 +4,8 @@
 BBDDS=("keycloak" "mysql")
 NOMBRE_LOG="backup_bbdd_"$(date +'%Y%m%d%H%M%S')".log"
 BACKUP_DIR=/backup-bbdd
-UBICACION_LOG="$BACKUP_DIR/$NOMBRE_LOG"
+LOG_DIR="$BACKUP_DIR/logs"
+UBICACION_LOG="$LOG_DIR/$NOMBRE_LOG"
 
 ## funciones
 function imprimirOutput() {
@@ -18,12 +19,13 @@ function imprimirOutput() {
 }
 
 ## main
-if [ ! -e "$BACKUP_DIR" ]; then
+if [ ! -e "$BACKUP_DIR" ] || [ ! -e "$LOG_DIR" ]; then
 	mkdir -p $BACKUP_DIR
-	imprimirOutput "Directorio de backup creado"
+	mkdir -p $LOG_DIR
+	imprimirOutput "Directorio de backup y logging creados"
 fi
 
-imprimirOutput "Iniciando script de backup de BBDD"
+imprimirOutput "Iniciando proceso de backup de BBDD"
 
 for bd in "${BBDDS[@]}"; do
 	imprimirOutput "Base de datos a copiar $bd"
@@ -36,4 +38,4 @@ for bd in "${BBDDS[@]}"; do
 	fi
 done
 
-imprimirOutput "Fin del script de backup de BBDD"
+imprimirOutput "Fin del proceso de backup de BBDD"
