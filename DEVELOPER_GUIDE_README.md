@@ -4,9 +4,17 @@ En esta guía encontrará los conceptos fundamentales para entender la complejid
 
 
 
+1. [Arquitectura del proyecto](#arquitectura-del-proyecto)
 
+2. [Compilacion](#compilacion)
 
-## Arquitectura del proyecto
+3. [Construcción y despliegue con Docker Compose (LOCAL)](#construccion-y-despliegue-con-docker-compose-en-entorno-local)
+
+4. [Creación de copias de seguridad de BBDD e importación manual](#creacion-de-copias-de-seguridad-de-bbdd-e-importacion-manual)
+
+   
+
+### Arquitectura del proyecto
 
 Proyecto Maven, conformado por un proyecto padre en el cual se especifican las características generales compartidas por todos los proyectos, como por ejemplo:
 
@@ -19,6 +27,8 @@ Proyecto Maven, conformado por un proyecto padre en el cual se especifican las c
 
 Se ha desarrollado un Docker Compose para la construcción del entorno y despliegue de la arquitectura del proyecto
 
+------
+
 ### Compilación
 
 Para compilar el proyecto y generar los JARS de los microservicios, es tan sencillo como ejecutar, desde la raíz del proyecto:
@@ -27,7 +37,7 @@ Para compilar el proyecto y generar los JARS de los microservicios, es tan senci
 mvn clean install
 ```
 
-
+------
 
 ### Construcción y despliegue con Docker Compose en entorno local
 
@@ -107,5 +117,3 @@ Tras ejecutar el script, se verifica la correcta importación de la copia, que e
 A modo de depuración de errores, se generan logs en la unidad de montaje.
 
 ![](./wiki/dev_guide/imgs/respaldo_bbdd_4.JPG)
-
-1. [Introducción General](#arquitectura-del-proyecto)
