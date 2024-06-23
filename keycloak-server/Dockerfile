@@ -47,10 +47,12 @@ COPY --from=base /lib64/libpcre2-8.so.0 /lib64/
 #ENV KC_DB_URL=jdbc:mysql://mysql-server:3307/keycloak
 #ENV KC_DB_USERNAME=keycloak_user
 #ENV KC_DB_PASSWORD=keycloak123
-#ENV KC_HOSTNAME=localhost
+#ENV KC_HOSTNAME=keycloak.local
 ########################################################################################################
 COPY restaurant-realm.json /opt/keycloak/data/import/
+
 ENV KEYCLOAK_SPI_SCRIPT_UPLOAD_ENABLED=true
 ENV KEYCLOAK_IMPORT=/opt/keycloak/data/import/restaurant-realm.json
 
+EXPOSE 8080
 ENTRYPOINT [ "/bin/sh", "/opt/keycloak/entrypoint.sh" ]

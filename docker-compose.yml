@@ -32,6 +32,7 @@ services:
       - HEALTHCHECK_PASSWORD=${HEALTHCHECK_PASSWORD}
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./backup-bbdd:/backup-bbdd
     healthcheck:
       test: ["CMD", "mysqladmin", "-h", "localhost", "-u", "${HEALTHCHECK_USER}", "-p${HEALTHCHECK_PASSWORD}", "ping"]
       interval: 20s
@@ -191,4 +192,6 @@ networks:
     
 volumes:
   mysql-data:
+   driver: local
+  backup-bbdd:
    driver: local
