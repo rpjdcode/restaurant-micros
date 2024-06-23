@@ -1,11 +1,26 @@
 #!/bin/sh
 
+LOG_DIR=/vault-storage/logs
+FECHA=$(date +'%Y%m%d%H%M%S')
+LOG_FILE="$LOG_DIR/vault_entrypoint_"$FECHA".log"
+
 ######################## BEGIN FUNCIONES ########################
+
+function imprimirOutput() {
+	fechaOutput="["$(date +'%d/%m/%Y %H:%M:%S')"]"
+	outputText="$fechaOutput $1"
+	if [ -f "$LOG_FILE" ]; then
+		echo $outputText | tee $LOG_FILE -a
+	else
+		echo $outputText | tee $LOG_FILE
+	fi
+}
+
 # Función para esperar a que Vault esté listo
 wait_for_vault() {
-  while ! nc -z localhost 8200; do
-    echo "Esperando a que Vault se inicie..."
-    sleep 1
+  while ! nc -z vault 8200; do
+    imprimirOutput "Esperando a que Vault se inicie..."
+    sleep 5
   done
 }
 
@@ -16,7 +31,7 @@ inicializarVault() {
 
 	# Verificar si la inicialización fue exitosa
 	if [ $? -ne 0 ]; then
-		echo "Error al inicializar Vault"
+		imprimirOutput "Error al inicializar Vault"
 		exit 1
 	fi
 }
@@ -28,7 +43,7 @@ extraerClavesToken() {
 
 	# Verificar si las claves fueron extraídas correctamente
 	if [ -z "$UNSEAL_KEY" ] || [ -z "$ROOT_TOKEN" ]; then
-		echo "Error al extraer las claves de desellado o el token raíz"
+		imprimirOutput "Error al extraer las claves de desellado o el token raíz"
 		exit 1
 	fi
 	
@@ -41,7 +56,7 @@ desellarVault() {
 
 	# Verificar si el desellado fue exitoso
 	if [ $? -ne 0 ]; then
-		echo "Error al desellar Vault"
+		imprimirOutput "Error al desellar Vault"
 		exit 1
 	fi
 }
@@ -53,7 +68,7 @@ iniciarSesion() {
 
 	# Verificar si el inicio de sesión fue exitoso
 	if [ $? -ne 0 ]; then
-		echo "Error al iniciar sesión con el token raíz"
+		imprimirOutput "Error al iniciar sesión con el token raíz"
 		exit 1
 	fi
 }
@@ -61,21 +76,21 @@ iniciarSesion() {
 # Función encargada de habilitar el motor de secretos KV en los paths requeridos (actualmente solo secret/)
 habilitarMotorSecretos() {
 	
-	echo "Habilitando motor de secretos KV"
+	imprimirOutput "Habilitando motor de secretos KV"
 	
 	# Habilitar el motor de secretos KV en secret/
 	vault secrets enable -path=secret/ kv
 
 	# Verificar si el motor de secretos fue habilitado correctamente
 	if [ $? -ne 0 ]; then
-		echo "Error al habilitar el motor de secretos KV"
+		imprimirOutput "Error al habilitar el motor de secretos KV"
 		exit 1
 	fi
 }
 
 # Función encargada de añadir los secretos deseados a Vault
 inicializacionSecretos() {
-	echo "Inicializando secretos de Vault"
+	imprimirOutput "Inicializando secretos de Vault"
 	# Adición de secretos (no recomendable dejar esto)
 	vault kv put secret/gitrepo git.uri=<enlace_git> git.username=<usuario_git> git.password=<password_git>
 }
@@ -90,6 +105,11 @@ almacenarArchivoHealthCheck() {
 
 ######################## BEGIN MAIN ########################
 
+if [ ! -e "$LOG_DIR" ]; then
+	mkdir -p $LOG_DIR
+fi
+
+
 # Iniciar Vault en segundo plano
 vault server -config=/vault/config/config.hcl&
 
@@ -100,12 +120,12 @@ inicializacionVault=$(vault operator init -status)
 
 # Comprobar si Vault ya ha sido inicializado previamente
 if [ "$inicializacionVault" = "Vault is initialized" ]; then
-	echo "Vault ya ha sido inicializado, se omite el proceso de inicialización"
+	imprimirOutput "Vault ya ha sido inicializado, se omite el proceso de inicialización"
 	extraerClavesToken
 	desellarVault
 	iniciarSesion 
 else
-	echo "Inicializando configuración de token raíz y claes de desellado de Vault"
+	imprimirOutput "Inicializando configuración de token raíz y claves de desellado de Vault"
 	
 	inicializarVault 
 	
@@ -124,9 +144,9 @@ else
 	inicializacionSecretos 
 fi
 
-echo "Unseal Key: $UNSEAL_KEY"
-echo "Root Token: $ROOT_TOKEN"
-echo "El servidor gestor de secretos Vault se está ejecutando correctamente"
+imprimirOutput "Unseal Key: $UNSEAL_KEY"
+imprimirOutput "Root Token: $ROOT_TOKEN"
+imprimirOutput "El servidor gestor de secretos Vault se está ejecutando correctamente"
 almacenarArchivoHealthCheck 
 
 # Mantener el contenedor en ejecución

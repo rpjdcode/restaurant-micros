@@ -23,4 +23,5 @@ buildNumber.properties
 */.gitignore
 
 # Personalizado
-backup-bbdd/
+mysql-server/backup-bbdd/
+vault-server/vault-storage/
