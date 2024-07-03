@@ -128,6 +128,8 @@ services:
       - "9092:9092"
     networks:
       - restaurant-network
+    volumes:
+      - ./kafka-server/storage:/kafka-storage
     depends_on:
       zookeeper:
         condition: service_healthy
@@ -228,4 +230,6 @@ volumes:
   backup-bbdd:
    driver: local
   vault-storage:
+   driver: local
+  kafka-storage:
    driver: local

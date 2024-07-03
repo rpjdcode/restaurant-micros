@@ -1,4 +1,4 @@
-FROM zookeeper:latest
+FROM zookeeper:3.7.2
 
 # Establecer el puerto de Zookeeper
 EXPOSE 2181 2888 3888

@@ -7,24 +7,40 @@
 		<groupId>com.eviden</groupId>
 		<artifactId>restaurant-micros</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath> <!-- lookup parent from
-		repository -->
+		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>micro-eureka-discovery-server</artifactId>
-	<name>micro-eureka-discovery-server</name>
-	<description>Microservicio de descubrimiento Eureka</description>
+	<artifactId>micro-kafka-consumer</artifactId>
+	<name>micro-kafka-consumer</name>
+	<description>Microservicio Kafka Consumer</description>
+	<url />
+	<licenses>
+		<license />
+	</licenses>
+	<developers>
+		<developer />
+	</developers>
+	<scm>
+		<connection />
+		<developerConnection />
+		<tag />
+		<url />
+	</scm>
 	<properties>
 		<java.version>21</java.version>
-		<spring-cloud.version>2023.0.1</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
 
 		<dependency>
@@ -34,16 +50,19 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -54,7 +73,8 @@
 				<version>3.3.1</version>
 				<configuration>
 					<mainClass>
-						com.eviden.eureka.MicroEurekaDiscoveryServerApplication</mainClass>
+						com.eviden.kafka.consumer.MicroKafkaConsumerApplication
+					</mainClass>
 				</configuration>
 				<executions>
 					<execution>

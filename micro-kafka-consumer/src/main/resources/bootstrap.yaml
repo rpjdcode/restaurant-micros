@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: micro-kafka-consumer
+  cloud:
+    config:
+      enabled: true
+      uri: http://host.docker.internal:9000
+  profiles:
+    active:
+      - default

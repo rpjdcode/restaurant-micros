@@ -29,16 +29,18 @@ docker-compose up --build
 
 **Tecnologías** utilizadas durante el desarrollo `back-end`
 
-| TECNOLOGÍA   | VERSIÓN                      | DESCRIPCIÓN                                                  |
-| ------------ | ---------------------------- | ------------------------------------------------------------ |
-| Java         | 21                           | Lenguaje utilizado para el desarrollo                        |
-| MySQL        | 8.0.36                       | Base de datos relacional                                     |
-| Spring Boot  | 3.3.1                        | Desarrollo ágil de aplicaciones Spring                       |
-| Spring Cloud | 2023.0.1                     | Desarrollo de aplicaciones orientadas a entornos de microservicios |
-| Keycloak     | 24.0.3                       | Servidor de autenticación y autorización                     |
-| Vault        | 1.13.3                       | Servidor gestor de claves y secretos                         |
-| Zipkin       | Latest (pendiente de elegir) | Trazabilidad de peticiones web                               |
-| MongoDB      | Latest (pendiente de elegir) | Base de datos documental                                     |
+| TECNOLOGÍA       | VERSIÓN                      | DESCRIPCIÓN                                                  |
+| ---------------- | ---------------------------- | ------------------------------------------------------------ |
+| Java             | 21                           | Lenguaje utilizado para el desarrollo                        |
+| MySQL            | 8.0.36                       | Base de datos relacional                                     |
+| MongoDB          | Latest (pendiente de elegir) | Base de datos documental                                     |
+| Spring Boot      | 3.3.1                        | Desarrollo ágil de aplicaciones Spring                       |
+| Spring Cloud     | 2023.0.1                     | Desarrollo de aplicaciones orientadas a entornos de microservicios |
+| Keycloak         | 24.0.3                       | Servidor de autenticación y autorización                     |
+| Vault            | 1.13.3                       | Servidor gestor de claves y secretos                         |
+| Zipkin           | Latest (pendiente de elegir) | Trazabilidad de peticiones web                               |
+| Apache Zookeeper | 3.7.2                        | Sincronización y registro distribuido para Apache Kafka      |
+| Apache Kafka     | 3.7.1                        | Mensajería distribuida para microservicios                   |
 
 
 
