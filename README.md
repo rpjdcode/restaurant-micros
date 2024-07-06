@@ -64,7 +64,8 @@ docker-compose up --build
 | Spring Cloud Config Server  | micro-config-server           | 0.0.1   |
 | Eureka Discovery Server     | micro-eureka-discovery-server | 0.0.1   |
 | Spring Cloud Gateway Server | micro-gateway-server          | 0.0.1   |
-| Spring Cloud Reactive Web   | micro-reactivo-prueba         | -       |
+| Spring Cloud Reactive Web   | micro-api-products            | 0.0.1   |
+| Spring Cloud Reactive Web   | micro-api-orders              | 0.0.1   |
 
 ---
 
