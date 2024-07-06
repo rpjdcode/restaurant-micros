@@ -82,7 +82,7 @@
 						</exclude>
 					</excludes>
 					<mainClass>
-						com.eviden.api.orders.MicroApiProductsApplication
+						com.eviden.api.products.MicroApiProductsApplication
 					</mainClass>
 				</configuration>
 				<executions>

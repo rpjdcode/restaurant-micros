@@ -1,4 +1,3 @@
-version: '3'
 services:
   # Base de datos documental experimental
   mongodb-server:
@@ -214,23 +213,8 @@ services:
       timeout: 10s
       retries: 3
     stop_grace_period: 1m30s
-  
-  # MICROSERVICIO REACTIVO DE TESTING
-  micro-reactivo-prueba:
-    build:
-      context: ./micro-reactivo-prueba
-      dockerfile: Dockerfile
-    depends_on:
-      micro-gateway-server:
-       condition: service_healthy
-      mongodb-server:
-        condition: service_healthy
-    ports:
-      - "10000:10000"
-    environment:
-      SPRING_PROFILES_ACTIVE: docker
-    networks:
-      - restaurant-network
+    
+  # MICROSERVICIOS (API)
       
   micro-api-products:
     build:
@@ -239,21 +223,10 @@ services:
     depends_on:
       micro-gateway-server:
         condition: service_healthy
-    ports:
-      - "10001:10001"
-    environment:
-      SPRING_PROFILES_ACTIVE: docker
-    networks:
-      - restaurant-network
-  micro-api-orders:
-    build:
-      context: ./micro-api-orders
-      dockerfile: Dockerfile
-    depends_on:
-      micro-gateway-server:
+      mongodb-server:
         condition: service_healthy
     ports:
-      - "10002:10002"
+      - "10001:10001"
     environment:
       SPRING_PROFILES_ACTIVE: docker
     networks:
