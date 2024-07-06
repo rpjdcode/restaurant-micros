@@ -15,9 +15,7 @@ public class MicroKafkaProviderApplication {
 	
 	@Bean
 	CommandLineRunner init(KafkaTemplate<String, String> kafkaTemplate) {
-		return args -> {
-			kafkaTemplate.send("ejemplo-topico-springboot", "Este es mi mensaje enviado en springboot");
-		};
+		return args -> kafkaTemplate.send("ejemplo-topico-springboot", "Este es mi mensaje enviado en springboot");
 	}
 
 }

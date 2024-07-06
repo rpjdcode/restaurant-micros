@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity.CsrfSpec;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 import com.eviden.gateway.keycloak.KeycloakJwtAuthenticationConverter;
@@ -17,11 +18,13 @@ public class GatewaySecurityConfig {
     SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
         	.cors(Customizer.withDefaults())
-        	.csrf(csrf -> csrf.disable())
+        	.csrf(CsrfSpec::disable)
         	
             .authorizeExchange(exchanges -> exchanges
                 .pathMatchers("/products/**").authenticated()
-                .pathMatchers("/service2/**").authenticated()
+                .pathMatchers("/dishes/**").authenticated()
+                .pathMatchers("/sales/**").authenticated()
+                .pathMatchers("/beverages/**").authenticated()
                 .anyExchange().permitAll())
             .oauth2ResourceServer(oauth2 -> {
             	oauth2.jwt(token -> token.jwtAuthenticationConverter(new KeycloakJwtAuthenticationConverter()));
