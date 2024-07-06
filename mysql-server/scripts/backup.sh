@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## constantes
-BBDDS=("keycloak" "mysql" "RESTAURANTDB")
+BBDDS=("keycloak" "mysql" "restaurantdb")
 NOMBRE_LOG="backup_bbdd_"$(date +'%Y%m%d%H%M%S')".log"
 BACKUP_DIR=/backup-bbdd
 LOG_DIR="$BACKUP_DIR/logs"

@@ -232,6 +232,33 @@ services:
     networks:
       - restaurant-network
       
+  micro-api-products:
+    build:
+      context: ./micro-api-products
+      dockerfile: Dockerfile
+    depends_on:
+      micro-gateway-server:
+        condition: service_healthy
+    ports:
+      - "10001:10001"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - restaurant-network
+  micro-api-orders:
+    build:
+      context: ./micro-api-orders
+      dockerfile: Dockerfile
+    depends_on:
+      micro-gateway-server:
+        condition: service_healthy
+    ports:
+      - "10002:10002"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - restaurant-network
+      
 # REDES
 networks:
   restaurant-network:

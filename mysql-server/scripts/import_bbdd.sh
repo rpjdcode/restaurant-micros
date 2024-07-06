@@ -6,7 +6,7 @@
 # Constantes
 
 # Bases de datos que se desean restaurar, en caso de ejecución sin parámetros
-BBDDS=("keycloak" "RESTAURANTDB")
+BBDDS=("keycloak" "restaurantdb")
 DIRECTORIO_BACKUPS=/backup-bbdd
 DIRECTORIO_LOGS="$DIRECTORIO_BACKUPS/logs"
 DIRECTORIO_TEMPORALES="$DIRECTORIO_BACKUPS/tmp"

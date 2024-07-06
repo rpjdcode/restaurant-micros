@@ -34,7 +34,7 @@ CREATE TABLE orders(
 	paid TINYINT(1) NOT NULL DEFAULT 0,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT NULL,
-	CONSTRAINT pk_orders PRIMARY KEY(id, product),
+	CONSTRAINT pk_orders PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Productos encontrados en cada comanda/orden
@@ -52,7 +52,7 @@ CREATE TABLE orders_payment(
 	order_id INT(11) NOT NULL,
 	amount DECIMAL(6,2) NOT NULL,
 	payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	payment_type ENUM('PAYPAL', 'BIZUM', 'CARD', 'CASH'),
+	payment_type ENUM('PAYPAL', 'BIZUM', 'CARD', 'CASH') DEFAULT 'CASH',
 	CONSTRAINT fk_orderpayment_order FOREIGN KEY(order_id) REFERENCES orders(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
