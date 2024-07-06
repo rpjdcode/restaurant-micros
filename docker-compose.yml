@@ -35,6 +35,9 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - ./mysql-server/backup-bbdd:/backup-bbdd
+    depends_on:
+      mongodb-server:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "mysqladmin", "-h", "localhost", "-u", "${HEALTHCHECK_USER}", "-p${HEALTHCHECK_PASSWORD}", "ping"]
       interval: 20s
@@ -113,6 +116,9 @@ services:
       - "2181:2181"
     networks:
       - restaurant-network
+    depends_on:
+      keycloak:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "echo", "ruok", "|", "nc", "localhost", "2181", "|", "grep", "imok"]
       interval: 30s
@@ -133,6 +139,12 @@ services:
     depends_on:
       zookeeper:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "kafka-broker-api-versions.sh", "--bootstrap-server", "localhost:9092"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
  # MICROSERVICIOS
   
@@ -157,6 +169,8 @@ services:
       retries: 3
     depends_on:
       keycloak:
+        condition: service_healthy
+      kafka:
         condition: service_healthy     
   
   # Eureka Discovery Server
