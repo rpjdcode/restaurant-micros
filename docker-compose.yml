@@ -155,7 +155,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-    # TODO: Se debería agregar un healhcheck para que compruebe el actuator
     depends_on:
       keycloak:
         condition: service_healthy     

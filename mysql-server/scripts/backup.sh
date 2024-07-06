@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## constantes
-BBDDS=("keycloak" "mysql")
+BBDDS=("keycloak" "mysql" "RESTAURANTDB")
 NOMBRE_LOG="backup_bbdd_"$(date +'%Y%m%d%H%M%S')".log"
 BACKUP_DIR=/backup-bbdd
 LOG_DIR="$BACKUP_DIR/logs"
@@ -31,7 +31,7 @@ for bd in "${BBDDS[@]}"; do
 	imprimirOutput "Base de datos a copiar $bd"
 	fechaFichero=$(date +'%Y%m%d%H%M%S')
 	backupFile="$BACKUP_DIR/mysql_"$bd"_backup_"$fechaFichero".sql"
-	if mysqldump -u root -p123456a $bd > "$backupFile"; then
+	if mysqldump -u ${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASSWORD} $bd > "$backupFile"; then
 		imprimirOutput "Backup realizado: $backupFile"
 	else
 		imprimirOutput "Error al realizar el backup"

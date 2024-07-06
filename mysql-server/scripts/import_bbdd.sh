@@ -6,7 +6,7 @@
 # Constantes
 
 # Bases de datos que se desean restaurar, en caso de ejecución sin parámetros
-BBDDS=("keycloak")
+BBDDS=("keycloak" "RESTAURANTDB")
 DIRECTORIO_BACKUPS=/backup-bbdd
 DIRECTORIO_LOGS="$DIRECTORIO_BACKUPS/logs"
 DIRECTORIO_TEMPORALES="$DIRECTORIO_BACKUPS/tmp"
@@ -31,7 +31,7 @@ function realizarProcesoRestauracion() {
 
 	# Consulta para verificar la existencia de la base de datos proporcioanda por parámetro
 	QUERY="SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$nombreBD';"
-	DB_EXISTS=$(mysql -u root -p123456a -se "${QUERY}")
+	DB_EXISTS=$(mysql -u ${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASSWORD} -se "${QUERY}")
 	
 	imprimirOutput "Valor de DB_EXISTS $DB_EXISTS"
 	
@@ -43,7 +43,7 @@ function realizarProcesoRestauracion() {
 		imprimirOutput "La base de datos ($nombreBD) existe. Procediendo a su restauración..."
 		# Generación de fichero temporal en caso de producirse un error durante el proceso
 		TEMPORAL_FILE="$DIRECTORIO_TEMPORALES/RECONSTRUCCION_BBDD_$1_"$FECHA".sql.tmp"
-		mysqldump -u root -p123456a $1 > "$TEMPORAL_FILE"
+		mysqldump -u ${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASSWORD} $1 > "$TEMPORAL_FILE"
 		
 		if [ $? -eq 0 ]; then
 			imprimirOutput "ARCHIVO TEMPORAL DE BBDD GENERADO: $TEMPORAL_FILE"
@@ -69,8 +69,8 @@ function realizarProcesoRestauracion() {
 ## 	- Devuelve 0 si se importan los datos correctamente
 ## 	- Devuelve 1 si se produce cualquier error durante la importación
 function reimportarDatos() {
-	mysql -u root -p123456a -e "DROP DATABASE "$1";CREATE DATABASE "$1";"
-	mysql -u root -p123456a $1 < $2
+	mysql -u ${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASSWORD} -e "DROP DATABASE "$1";CREATE DATABASE "$1";"
+	mysql -u ${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASSWORD} $1 < $2
 	
 	if [ $? -eq 0 ]; then
 	    imprimirOutput "La importación de la base de datos se realizó correctamente."
