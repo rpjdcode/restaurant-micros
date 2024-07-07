@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.eviden.api.products.dto.ProductDTO;
 import com.eviden.api.products.model.Product;
+import com.eviden.api.products.model.ProductMapper;
 import com.eviden.api.products.model.ProductType;
 import com.eviden.api.products.repository.ProductRepository;
 import com.eviden.api.products.repository.ProductTypeRepository;
@@ -23,19 +24,19 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Mono<Product> getProductById(String id) {
-		return productRepository.findById(id);
+	public Mono<ProductDTO> getProductById(String id) {
+		return productRepository.findById(id).map(ProductMapper::productToDTO);
 	}
 
 	@Override
-	public Flux<Product> getAllProducts() {
-		return productRepository.findAll();
+	public Flux<ProductDTO> getAllProducts() {
+		return productRepository.findAll().map(ProductMapper::productToDTO);
 	}
 
 	@Override
-	public Mono<Product> createProduct(ProductDTO dto) {
+	public Mono<ProductDTO> createProduct(ProductDTO dto) {
 		Product product = new Product(dto.getId(), dto.getName(), dto.getPrice(), dto.getActive(), dto.getProductType());
-		return productRepository.save(product);
+		return productRepository.save(product).map(ProductMapper::productToDTO);
 	}
 
 	@Override
@@ -64,11 +65,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Mono<Product> updateProduct(String id, ProductDTO updateData) {
+	public Mono<ProductDTO> updateProduct(String id, ProductDTO updateData) {
 		return productRepository.findById(id).flatMap(existingProduct -> {
 			existingProduct.setName(updateData.getName());
 			existingProduct.setPrice(updateData.getPrice());
-			return productRepository.save(existingProduct);
+			return productRepository.save(existingProduct).map(ProductMapper::productToDTO);
 		});
 
 	}

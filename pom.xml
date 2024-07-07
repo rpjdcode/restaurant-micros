@@ -16,7 +16,6 @@
 		<module>micro-gateway-server</module>
 		<module>micro-api-orders</module>
 		<module>micro-api-products</module>
-		<module>micro-reactivo-prueba</module>
 	</modules>
 
 	<properties>

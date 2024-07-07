@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eviden.api.products.dto.ProductDTO;
-import com.eviden.api.products.model.Product;
 import com.eviden.api.products.service.ProductService;
 
 import reactor.core.publisher.Flux;
@@ -30,23 +29,23 @@ public class ProductController {
     }
 
     @GetMapping
-    public Flux<Product> getAllProducts() {
+    public Flux<ProductDTO> getAllProducts() {
         return productService.getAllProducts();
     }
 
     @GetMapping("/{id}")
-    public Mono<Product> getProductById(@PathVariable String id) {
+    public Mono<ProductDTO> getProductById(@PathVariable String id) {
         return productService.getProductById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Product> createProduct(@RequestBody ProductDTO data) {
+    public Mono<ProductDTO> createProduct(@RequestBody ProductDTO data) {
         return productService.createProduct(data);
     }
 
     @PutMapping("/{id}")
-    public Mono<Product> updateProduct(@PathVariable String id, @RequestBody ProductDTO updateData) {
+    public Mono<ProductDTO> updateProduct(@PathVariable String id, @RequestBody ProductDTO updateData) {
         return productService.updateProduct(id, updateData);
     }
 
