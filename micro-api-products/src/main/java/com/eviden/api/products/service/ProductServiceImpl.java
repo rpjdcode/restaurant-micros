@@ -3,6 +3,7 @@ package com.eviden.api.products.service;
 import org.springframework.stereotype.Service;
 
 import com.eviden.api.products.dto.ProductDTO;
+import com.eviden.api.products.dto.ProductTypeDTO;
 import com.eviden.api.products.model.Product;
 import com.eviden.api.products.model.ProductMapper;
 import com.eviden.api.products.model.ProductType;
@@ -38,32 +39,7 @@ public class ProductServiceImpl implements ProductService {
 		Product product = new Product(dto.getId(), dto.getName(), dto.getPrice(), dto.getActive(), dto.getProductType());
 		return productRepository.save(product).map(ProductMapper::productToDTO);
 	}
-
-	@Override
-	public Mono<Void> deleteProductById(String id) {
-		return productRepository.deleteById(id);
-	}
-
-	@Override
-	public Mono<ProductType> getProductTypeById(String id) {
-		return productTypeRepository.findById(id);
-	}
-
-	@Override
-	public Flux<ProductType> getAllProductTypes() {
-		return productTypeRepository.findAll();
-	}
-
-	@Override
-	public Mono<ProductType> createProductType(ProductType productType) {
-		return productTypeRepository.save(productType);
-	}
-
-	@Override
-	public Mono<Void> deleteProductTypeById(String id) {
-		return productTypeRepository.deleteById(id);
-	}
-
+	
 	@Override
 	public Mono<ProductDTO> updateProduct(String id, ProductDTO updateData) {
 		return productRepository.findById(id).flatMap(existingProduct -> {
@@ -73,5 +49,42 @@ public class ProductServiceImpl implements ProductService {
 		});
 
 	}
+
+	@Override
+	public Mono<Void> deleteProductById(String id) {
+		return productRepository.deleteById(id);
+	}
+
+	@Override
+	public Flux<ProductTypeDTO> getAllProductTypes() {
+		return productTypeRepository.findAll().map(ProductMapper::productTypeToDTO);
+	}
+	
+	@Override
+	public Mono<ProductTypeDTO> getProductTypeById(String id) {
+		return productTypeRepository.findById(id).map(ProductMapper::productTypeToDTO);
+	}
+
+	@Override
+	public Mono<ProductTypeDTO> createProductType(ProductTypeDTO dto) {
+		ProductType productType = new ProductType(dto.getId(), dto.getName());
+
+		return productTypeRepository.save(productType).map(ProductMapper::productTypeToDTO);
+	}
+
+	@Override
+	public Mono<Void> deleteProductTypeById(String id) {
+		return productTypeRepository.deleteById(id);
+	}
+	
+	@Override
+	public Mono<ProductTypeDTO> updateProductType(String id, ProductTypeDTO updateData) {
+		return productTypeRepository.findById(id).flatMap(existingType -> {
+			existingType.setName(updateData.getName());
+			return productTypeRepository.save(existingType).map(ProductMapper::productTypeToDTO);
+		});
+	}
+
+
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eviden.api.products.dto.ProductDTO;
+import com.eviden.api.products.dto.ProductTypeDTO;
 import com.eviden.api.products.service.ProductService;
 
 import reactor.core.publisher.Flux;
@@ -54,4 +55,34 @@ public class ProductController {
     public Mono<Void> deleteProduct(@PathVariable String id) {
         return productService.deleteProductById(id);
     }
+    
+    @GetMapping("/types")
+    public Flux<ProductTypeDTO> getAllProductTypes() {
+        return productService.getAllProductTypes();
+    }
+    
+    @GetMapping("/types/{id}")
+    public Mono<ProductTypeDTO> getProductTypeById(@PathVariable String id) {
+        return productService.getProductTypeById(id);
+    }
+
+    @PostMapping("/types")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Mono<ProductTypeDTO> createProductType(@RequestBody ProductTypeDTO data) {
+        return productService.createProductType(data);
+    }
+
+
+    @DeleteMapping("/types/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Mono<Void> deleteProductType(@PathVariable String id) {
+        return productService.deleteProductTypeById(id);
+    }
+    
+    @PutMapping("/types/{id}")
+    public Mono<ProductTypeDTO> updateProductType(@PathVariable String id, @RequestBody ProductTypeDTO updateData) {
+        return productService.updateProductType(id, updateData);
+    }
+    
+    
 }
