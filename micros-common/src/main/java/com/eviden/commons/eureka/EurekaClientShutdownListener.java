@@ -1,6 +1,5 @@
 package com.eviden.commons.eureka;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.stereotype.Component;
@@ -14,8 +13,11 @@ import com.netflix.discovery.EurekaClient;
 @Component
 public class EurekaClientShutdownListener implements ApplicationListener<ContextClosedEvent> {
 
-    @Autowired
     private EurekaClient eurekaClient;
+    
+    public EurekaClientShutdownListener(EurekaClient eurekaClient) {
+    	this.eurekaClient = eurekaClient;
+    }
 
     @Override
     public void onApplicationEvent(ContextClosedEvent event) {
