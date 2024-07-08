@@ -2,12 +2,9 @@ param(
 	[string]$tagVersion
 )
 
-# Almacenar la salida del comando en una variable
 $imagenes = docker images --format "{{.Repository}} {{.ID}}" --filter "reference=restaurant*";
 
-Write-Output $imagenes;
 
-# Recorrer cada registro
 foreach ($imagen in $imagenes) {
     $fragmentos = $imagen -split ' ' 
 	
@@ -19,3 +16,5 @@ foreach ($imagen in $imagenes) {
 	Write-Output "Comando a ejecutar: " $comando
 	Invoke-Expression $comando;
 }
+
+Write-Output "Se han etiquetado todos las imágenes del proyecto con el tag ${tagVersion}"
