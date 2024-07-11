@@ -13,17 +13,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductDTO {
 
-    private String id;
+    private String productCode;
     private String name;
     private BigDecimal price;
     private Boolean active;
-    private String productType;
+    private ProductTypeDTO productType;
     
     public ProductDTO(Product product) {
-    	id = product.getId();
+    	productCode = product.getProductCode();
     	name = product.getName();
     	price = product.getPrice();
     	active = product.getActive();
-    	productType = product.getProductType();
+    	productType = new ProductTypeDTO();
+    	productType.setTypeCode(product.getProductType());
     }
 }

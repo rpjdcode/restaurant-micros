@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductTypeDTO {
 
-    private String id;
+    private String typeCode;
     private String name;
     
     public ProductTypeDTO(ProductType type) {
-    	id = type.getId();
+    	typeCode = type.getTypeCode();
     	name = type.getName();
     }
 }

@@ -22,53 +22,53 @@ db.createCollection('ordersPayment');
 	Inserciones por defecto para la base de datos
 */
 db.productTypes.insertMany([
-    { id: 1, name: 'Dessert' },
-    { id: 2, name: 'Seafood' },
-    { id: 3, name: 'Veggie' },
-    { id: 4, name: 'Fruit' },
-    { id: 5, name: 'Drink' },
-    { id: 6, name: 'Starter' },
-    { id: 7, name: 'Sandwich' },
-    { id: 8, name: 'Entrée' }
+    { typeCode: 'DESSERT', name: 'Dessert' },
+    { typeCode: 'SEAFOOD', name: 'Seafood' },
+    { typeCode: 'VEG', name: 'Veggie' },
+    { typeCode: 'FRUIT', name: 'Fruit' },
+    { typeCode: 'DRINK', name: 'Drink' },
+    { typeCode: 'STARTER', name: 'Starter' },
+    { typeCode: 'SANDWICH', name: 'Sandwich' },
+    { typeCode: 'ENTREE', name: 'Entrée' }
 ]);
 
 db.products.insertMany([
-    { id: 1, name: 'Chocolate Cake', productType: 1, price: 4.50, active: true },
-    { id: 2, name: 'Ice Cream', productType: 1, price: 3.00, active: true },
-    { id: 3, name: 'Grilled Salmon', productType: 2, price: 12.00, active: true },
-    { id: 4, name: 'Shrimp Cocktail', productType: 2, price: 8.50, active: true },
-    { id: 5, name: 'Veggie Burger', productType: 3, price: 6.00, active: true },
-    { id: 6, name: 'Caesar Salad', productType: 3, price: 5.50, active: true },
-    { id: 7, name: 'Apple', productType: 4, price: 1.00, active: true },
-    { id: 8, name: 'Orange', productType: 4, price: 1.00, active: true },
-    { id: 9, name: 'Cola', productType: 5, price: 1.50, active: true },
-    { id: 10, name: 'Water', productType: 5, price: 1.00, active: true },
-    { id: 11, name: 'French Fries', productType: 6, price: 2.50, active: true },
-    { id: 12, name: 'Spring Rolls', productType: 6, price: 4.00, active: true },
-    { id: 13, name: 'Ham Sandwich', productType: 7, price: 3.50, active: true },
-    { id: 14, name: 'Chicken Sandwich', productType: 7, price: 4.00, active: true },
-    { id: 15, name: 'Steak', productType: 8, price: 15.00, active: true },
-    { id: 16, name: 'Pasta', productType: 8, price: 10.00, active: true }
+    { productCode: 'CHOCCK1', name: 'Chocolate Cake', productType: 'DESSERT', price: 4.50, active: true },
+    { productCode: 'ICREAM1', name: 'Ice Cream', productType: 'DESSERT', price: 3.00, active: true },
+    { productCode: 'GRILSAL1', name: 'Grilled Salmon', productType: 'SEAFOOD', price: 12.00, active: true },
+    { productCode: 'SHRMP1', name: 'Shrimp Cocktail', productType: 'SEAFOOD', price: 8.50, active: true },
+    { productCode: 'VEGBUR1', name: 'Veggie Burger', productType: 'VEG', price: 6.00, active: true },
+    { productCode: 'CAESAL', name: 'Caesar Salad', productType: 'VEG', price: 5.50, active: true },
+    { productCode: 'APPLE', name: 'Apple', productType: 'FRUIT', price: 1.00, active: true },
+    { productCode: 'ORANGE', name: 'Orange', productType: 'FRUIT', price: 1.00, active: true },
+    { productCode: 'DCOLA1', name: 'Cola', productType: 'DRINK', price: 1.50, active: true },
+    { productCode: 'DWAT1', name: 'Water', productType: 'DRINK', price: 1.00, active: true },
+    { productCode: 'FRIESFR', name: 'French Fries', productType: 'STARTER', price: 2.50, active: true },
+    { productCode: 'SPRINGROL', name: 'Spring Rolls', productType: 'STARTER', price: 4.00, active: true },
+    { productCode: 'SANDWICH1', name: 'Ham Sandwich', productType: 'SANDWICH', price: 3.50, active: true },
+    { productCode: 'SANDWICH2', name: 'Chicken Sandwich', productType: 'SANDWICH', price: 4.00, active: true },
+    { productCode: 'STEAK', name: 'Steak', productType: 'ENTREE', price: 15.00, active: true },
+    { productCode: 'PASTA', name: 'Pasta', productType: 'ENTREE', price: 10.00, active: true }
 ]);
 
 db.orders.insertMany([
-    { id: 1, paid: false },
-    { id: 2, paid: true },
-    { id: 3, paid: false },
-    { id: 4, paid: true }
+    { orderCode: 'ORD000000000001', paid: false },
+    { orderCode: 'ORD000000000002', paid: true },
+    { orderCode: 'ORD000000000003', paid: false },
+    { orderCode: 'ORD000000000004', paid: true }
 ]);
 
 db.productsOrders.insertMany([
-    { productId: 1, orderId: 1, quantity: 2 },
-    { productId: 5, orderId: 1, quantity: 1 },
-    { productId: 9, orderId: 1, quantity: 3 },
-    { productId: 3, orderId: 2, quantity: 1 },
-    { productId: 11, orderId: 2, quantity: 2 },
-    { productId: 8, orderId: 2, quantity: 1 },
-    { productId: 2, orderId: 3, quantity: 1 },
-    { productId: 10, orderId: 3, quantity: 2 },
-    { productId: 15, orderId: 4, quantity: 1 },
-    { productId: 12, orderId: 4, quantity: 1 }
+    { productCode: 'CHOCCK1', orderId: 1, quantity: 2 },
+    { productCode: 'VEGBUR1', orderId: 1, quantity: 1 },
+    { productCode: 'DCOLA1', orderId: 1, quantity: 3 },
+    { productCode: 'GRILSAL1', orderId: 2, quantity: 1 },
+    { productCode: 'FRIESFR', orderId: 2, quantity: 2 },
+    { productCode: 'ORANGE', orderId: 2, quantity: 1 },
+    { productCode: 'ICREAM1', orderId: 3, quantity: 1 },
+    { productCode: 'DWAT1', orderId: 3, quantity: 2 },
+    { productCode: 'SANDWICH2', orderId: 4, quantity: 1 },
+    { productCode: 'SPRINGROL', orderId: 4, quantity: 1 }
 ]);
 
 db.ordersPayment.insertMany([

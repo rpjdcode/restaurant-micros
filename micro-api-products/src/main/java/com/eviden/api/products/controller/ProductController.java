@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eviden.api.products.dto.ProductDTO;
-import com.eviden.api.products.dto.ProductTypeDTO;
-import com.eviden.api.products.service.ProductService;
+import com.eviden.api.products.service.ProductDTOService;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -23,65 +22,38 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/products")
 public class ProductController {
     
-    private final ProductService productService;
+    private final ProductDTOService dtoService;
     
-    public ProductController(ProductService service) {
-    	this.productService = service;
+    public ProductController(ProductDTOService dtoService) {
+    	this.dtoService = dtoService;
     }
 
     @GetMapping
-    public Flux<ProductDTO> getAllProducts() {
-        return productService.getAllProducts();
+    public Flux<ProductDTO> getProducts() {
+    	
+        return dtoService.getAllProducts();
     }
 
-    @GetMapping("/{id}")
-    public Mono<ProductDTO> getProductById(@PathVariable String id) {
-        return productService.getProductById(id);
+    @GetMapping("/{code}")
+    public Mono<ProductDTO> getProductByProductCode(@PathVariable String code) {
+        return dtoService.getProductByProductCode(code);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<ProductDTO> createProduct(@RequestBody ProductDTO data) {
-        return productService.createProduct(data);
+        return dtoService.createProduct(data);
     }
 
-    @PutMapping("/{id}")
-    public Mono<ProductDTO> updateProduct(@PathVariable String id, @RequestBody ProductDTO updateData) {
-        return productService.updateProduct(id, updateData);
+    @PutMapping("/{code}")
+    public Mono<ProductDTO> updateProduct(@PathVariable String code, @RequestBody ProductDTO updateData) {
+        return dtoService.updateProduct(code, updateData);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{code}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Mono<Void> deleteProduct(@PathVariable String id) {
-        return productService.deleteProductById(id);
-    }
-    
-    @GetMapping("/types")
-    public Flux<ProductTypeDTO> getAllProductTypes() {
-        return productService.getAllProductTypes();
-    }
-    
-    @GetMapping("/types/{id}")
-    public Mono<ProductTypeDTO> getProductTypeById(@PathVariable String id) {
-        return productService.getProductTypeById(id);
-    }
-
-    @PostMapping("/types")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Mono<ProductTypeDTO> createProductType(@RequestBody ProductTypeDTO data) {
-        return productService.createProductType(data);
-    }
-
-
-    @DeleteMapping("/types/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Mono<Void> deleteProductType(@PathVariable String id) {
-        return productService.deleteProductTypeById(id);
-    }
-    
-    @PutMapping("/types/{id}")
-    public Mono<ProductTypeDTO> updateProductType(@PathVariable String id, @RequestBody ProductTypeDTO updateData) {
-        return productService.updateProductType(id, updateData);
+    public Mono<Void> deleteProduct(@PathVariable String code) {
+        return dtoService.deleteProductByCode(code);
     }
     
     
