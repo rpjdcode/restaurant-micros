@@ -35,7 +35,7 @@ public class ProductController {
     }
 
     @GetMapping("/{code}")
-    public Mono<ProductDTO> getProductByProductCode(@PathVariable String code) {
+    public Mono<ProductDTO> getProductByProductCode(@PathVariable("code") String code) {
         return dtoService.getProductByProductCode(code);
     }
 
@@ -46,13 +46,13 @@ public class ProductController {
     }
 
     @PutMapping("/{code}")
-    public Mono<ProductDTO> updateProduct(@PathVariable String code, @RequestBody ProductDTO updateData) {
+    public Mono<ProductDTO> updateProduct(@PathVariable("code") String code, @RequestBody ProductDTO updateData) {
         return dtoService.updateProduct(code, updateData);
     }
 
     @DeleteMapping("/{code}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Mono<Void> deleteProduct(@PathVariable String code) {
+    public Mono<Void> deleteProduct(@PathVariable("code") String code) {
         return dtoService.deleteProductByCode(code);
     }
     
