@@ -22,7 +22,7 @@ public class Product {
     private String productCode;
     private String name;
     private BigDecimal price;
-    private Boolean active;
+    private Boolean active;	
     
     private String productType;
     

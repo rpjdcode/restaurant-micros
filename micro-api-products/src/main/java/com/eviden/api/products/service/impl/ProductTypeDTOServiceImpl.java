@@ -56,6 +56,8 @@ public class ProductTypeDTOServiceImpl implements ProductTypeDTOService {
 
 	@Override
 	public Mono<Void> deleteProductTypeByCode(String code) {
+
+		// Tratar cuando no exista un producto, devolver un error para ser capturado por el endpoint
 		return productTypeService.deleteProductTypeByCode(code);
 	}
 

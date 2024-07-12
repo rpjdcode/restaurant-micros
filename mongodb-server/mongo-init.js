@@ -12,11 +12,12 @@ db.createUser({
 	Inicialización de base de datos y colecciones
 */
 db = db.getSiblingDB('restaurantdb');
-db.createCollection('productTypes');
-db.createCollection('products');
-db.createCollection('orders');
-db.createCollection('productsOrders');
-db.createCollection('ordersPayment');
+db.createCollection('productTypes'); // Tipos de producto
+db.createCollection('products'); // Productos
+db.createCollection('orders'); // Comandas
+db.createCollection('productsOrders'); // Productos encontrados en comandas
+db.createCollection('ordersPayment'); // Pagos de comandas
+db.createCollection('productData'); // Imágenes de productos
 
 /*
 	Inserciones por defecto para la base de datos

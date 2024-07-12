@@ -3,6 +3,7 @@ package com.eviden.api.products.service.impl;
 import org.springframework.stereotype.Service;
 
 import com.eviden.api.products.dto.ProductTypeDTO;
+import com.eviden.api.products.exceptions.ProductTypeNotFoundException;
 import com.eviden.api.products.model.ProductType;
 import com.eviden.api.products.repository.ProductTypeRepository;
 import com.eviden.api.products.service.ProductTypeService;
@@ -31,7 +32,9 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
 	@Override
 	public Mono<ProductType> createProductType(ProductTypeDTO dto) {
-		ProductType productType = new ProductType(dto.getTypeCode(), dto.getName());
+		ProductType productType = new ProductType();
+		productType.setName(dto.getName());
+		productType.setTypeCode(dto.getTypeCode());
 
 		return productTypeRepository.save(productType);
 	}
@@ -56,12 +59,16 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
 	@Override
 	public Mono<ProductType> getProductTypeByTypeCode(String code) {
-		return productTypeRepository.findByTypeCode(code);
+		return productTypeRepository.findByTypeCode(code)
+				.switchIfEmpty(Mono.error(new ProductTypeNotFoundException("El tipo de producto indicado no existe")))
+				.flatMap(existingType -> Mono.just(existingType));
 	}
 
 	@Override
 	public Mono<Void> deleteProductTypeByCode(String code) {
-		return productTypeRepository.deleteByTypeCode(code);
+        return productTypeRepository.findByTypeCode(code)
+                .switchIfEmpty(Mono.error(new ProductTypeNotFoundException("El tipo de producto indicado no existe")))
+                .flatMap(existingType -> productTypeRepository.deleteByTypeCode(existingType.getTypeCode()));
 	}
 
 }

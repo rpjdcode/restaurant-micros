@@ -7,15 +7,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Document(collection = "productData")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "productTypes")
-public class ProductType {
+public class ProductData {
 
 	@Id
 	private String id;
-    private String typeCode;
-    private String name;
-
+	private String productCode;
+	private ProductDataTypes dataType;
+	private String fileName;
+	private byte[] data;
 }
