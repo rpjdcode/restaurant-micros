@@ -5,5 +5,5 @@ RUN chmod +x entrypoint.sh
 
 EXPOSE 8761
 
-#ENTRYPOINT ["java", "-jar", "/micro-eureka-discovery-server.jar"]
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["java", "-jar", "/micro-eureka-discovery-server.jar"]
+#ENTRYPOINT ["/entrypoint.sh"]

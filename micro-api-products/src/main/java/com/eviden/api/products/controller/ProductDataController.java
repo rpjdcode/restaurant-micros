@@ -30,9 +30,20 @@ public class ProductDataController {
 		this.service = service;
 	}
 
+	@GetMapping("/{productCode}/{type}")
+	public Mono<ResponseEntity<ProductData>> obtainProductData(@PathVariable("productCode") String productCode,
+			@PathVariable("type") String type) {
+		
+		
+		return service.getProductDataByCodeAndType(productCode, ProductDataTypes.valueOf(type)).flatMap(data -> {
+			return Mono.just(ResponseEntity.ok(data));
+		}).defaultIfEmpty(ResponseEntity.ok().build());
+	}
+
 	/**
-	 * TODO: Cambiar el tipo de Mono<String> a Mono<APIResponse>
-	 * Endpoint para subir una imagen asociada a un producto
+	 * TODO: Cambiar el tipo de Mono<String> a Mono<APIResponse> Endpoint para subir
+	 * una imagen asociada a un producto
+	 * 
 	 * @param product
 	 * @param filePartMono
 	 * @return
@@ -40,29 +51,29 @@ public class ProductDataController {
 	@PostMapping("/upload")
 	public Mono<String> uploadImage(@RequestParam("productCode") String productCode,
 			@RequestPart("file") Mono<FilePart> filePartMono) {
-		
-		return filePartMono.flatMap(filePart -> DataBufferUtils.join(filePart.content())
-				.flatMap(dataBuffer -> {
-					byte[] data = new byte[dataBuffer.readableByteCount()];
-					dataBuffer.read(data);
-					DataBufferUtils.release(dataBuffer);
 
-					ProductData productData = new ProductData();
-					productData.setProductCode(productCode);
-					productData.setDataType(ProductDataTypes.PRESENTATION);
-					productData.setFileName(filePart.filename());
-					productData.setData(data);
-					
-					return service.updateProductData(productCode, ProductDataTypes.PRESENTATION, productData)
+		return filePartMono.flatMap(filePart -> DataBufferUtils.join(filePart.content()).flatMap(dataBuffer -> {
+			byte[] data = new byte[dataBuffer.readableByteCount()];
+			dataBuffer.read(data);
+			DataBufferUtils.release(dataBuffer);
+
+			ProductData productData = new ProductData();
+			productData.setProductCode(productCode);
+			productData.setDataType(ProductDataTypes.PRESENTATION);
+			productData.setFileName(filePart.filename());
+			productData.setData(data);
+
+			return service.updateProductData(productCode, ProductDataTypes.PRESENTATION, productData)
 					.switchIfEmpty(service.saveProductData(productData))
 					.then(Mono.just("File uploaded: " + filePart.filename()));
 
-				}).subscribeOn(Schedulers.boundedElastic()) // Mover el trabajo pesado fuera del hilo principal
+		}).subscribeOn(Schedulers.boundedElastic()) // Mover el trabajo pesado fuera del hilo principal
 		);
 	}
 
 	/**
-	 * Endpoint para mostrar la imagen del producto como respuesta en caso de existir.
+	 * Endpoint para mostrar la imagen del producto como respuesta en caso de
+	 * existir.
 	 * 
 	 * @param productCode
 	 * @return
@@ -77,7 +88,7 @@ public class ProductDataController {
 				headers.setContentDispositionFormData("attachment", data.getFileName());
 				return ResponseEntity.ok().headers(headers).body(data.getData());
 			}
-			return ResponseEntity.notFound().<byte[]>build();
+			return ResponseEntity.ok().<byte[]>build();
 
 		}).defaultIfEmpty(ResponseEntity.notFound().build());
 	}
