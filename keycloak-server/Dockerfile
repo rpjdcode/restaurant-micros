@@ -11,13 +11,18 @@ ENV KC_DB=mysql
 
 WORKDIR /opt/keycloak
 
-# Ejemplo con certificado
-RUN keytool -genkeypair -storepass password -storetype PKCS12 -keyalg RSA -keysize 2048 -dname "CN=server" -alias server -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -keystore conf/server.keystore
-RUN /opt/keycloak/bin/kc.sh build
+# Código que no sé qué es
+#RUN keytool -genkeypair -storepass password -storetype PKCS12 -keyalg RSA -keysize 2048 -dname "CN=server" -alias server -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -keystore conf/server.keystore
+#RUN /opt/keycloak/bin/kc.sh build
 
 USER root
 COPY entrypoint.sh /opt/keycloak/entrypoint.sh
 COPY keycloak.conf /opt/keycloak/conf/keycloak.conf
+COPY /cert/keystore.p12 /opt/keycloak/conf/keystore.p12
+
+# Importar el certificado en el almacén de claves de Java
+#RUN keytool -import -trustcacerts -keystore /usr/lib/jvm/jre/lib/security/cacerts -storepass micros123 -noprompt -alias evidenmicros -file /opt/keycloak/conf/server.crt
+
 RUN chmod +x /opt/keycloak/entrypoint.sh
 
 FROM quay.io/keycloak/keycloak:24.0.3
@@ -54,5 +59,8 @@ COPY restaurant-realm.json /opt/keycloak/data/import/
 ENV KEYCLOAK_SPI_SCRIPT_UPLOAD_ENABLED=true
 ENV KEYCLOAK_IMPORT=/opt/keycloak/data/import/restaurant-realm.json
 
-EXPOSE 8080
+# HTTP
+#EXPOSE 8080
+# HTTPS
+EXPOSE 8443 
 ENTRYPOINT [ "/bin/sh", "/opt/keycloak/entrypoint.sh" ]

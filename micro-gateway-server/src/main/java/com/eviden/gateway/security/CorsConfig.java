@@ -16,7 +16,7 @@ public class CorsConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(Arrays.asList(MicrosConstants.FRONTEND_SERVER));
+        corsConfig.setAllowedOrigins(Arrays.asList(MicrosConstants.FRONTEND_SERVER, MicrosConstants.FRONTEND_SERVER_SSL));
         corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfig.setAllowedHeaders(Arrays.asList("*"));
         corsConfig.setAllowCredentials(true);
